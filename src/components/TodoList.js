@@ -19,7 +19,9 @@ const TodoList = ( props ) => {
   return (
     <div id="todo-list">
       <h1>{props.title}</h1>
-      { buildItems() }
+      <div id={props.containerID}>
+        { buildItems() }
+      </div>
       <button onClick={ handleClear } className="flat-button flat-button_red">Clear list</button>
     </div>
   )
@@ -28,7 +30,8 @@ const TodoList = ( props ) => {
 export default connect( ( state, ownProps ) => {
   return {
     todoList: state.todo,
-    title: ownProps.title
+    title: ownProps.title,
+    containerID: ownProps.containerID
   }
 }, dispatch => {
   return {

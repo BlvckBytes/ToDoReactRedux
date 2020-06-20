@@ -26,8 +26,10 @@ const TodoItem = ( props ) => {
   return (
     <div className={ "todo-item" + ( props.isSelected() ? " todo-item_active" : "" ) }>
       <h1>{ props.name }</h1>
-      <img src="images/edit.svg" onClick={ handleEdit } alt="edit"/>
-      <img src="images/delete.svg" onClick={ handleDelete } alt="delete"/>
+      <div>
+        <img src="images/edit.svg" onClick={ handleEdit } alt="edit"/>
+        <img src="images/delete.svg" onClick={ handleDelete } alt="delete"/>
+      </div>
     </div>
   )
 }

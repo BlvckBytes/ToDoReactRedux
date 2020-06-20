@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import { add, rename, unselect } from '../actions/todo';
 import './styles/todo_create.sass';
+import { animateScroll } from "react-scroll";
 
 const TodoCreate = ( props ) => {
 
@@ -16,6 +17,14 @@ const TodoCreate = ( props ) => {
   // can be restored afterwards and input didn't get lost
   const [ typedCache, setTypedCache ] = useState( "" );
 
+  const scrollToBottom = () => {
+    animateScroll.scrollToBottom( {
+      containerId: props.containerID,
+      delay: 0,
+      duration: 300
+    } );
+  }
+
   // Handle creation of a new item based on title in props
   const handleCreation = ( e ) => {
     e.preventDefault();
@@ -28,6 +37,9 @@ const TodoCreate = ( props ) => {
     if( !textboxVal.selID ) {
       props.add( textboxVal.text );
       setTextboxVal( { text: "", selID: undefined } );
+      
+      // Scroll to bottom of container after a delay, to give some time for creation
+      setTimeout( () => scrollToBottom(), 200 );
       return;
     }
 
@@ -49,7 +61,11 @@ const TodoCreate = ( props ) => {
 
     // Something got selected, textbox value has not been set
     if( sel && textboxVal.selID !== sel.id ) {
-      setTypedCache( textboxVal.text );
+
+      // Only set cache if cache hasn't been set yet
+      if( textboxVal.selID === undefined )
+        setTypedCache( textboxVal.text );
+      
       setTextboxVal( { text: props.selected().title, selID: props.selected().id } );
     }
 
@@ -64,16 +80,17 @@ const TodoCreate = ( props ) => {
   return (
     <div id="todo-create">
       <form>
-        <input value={ getInputValue() } onChange={ handleChange } type="text" name="name"/>
+        <input placeholder="Todo title" value={ getInputValue() } onChange={ handleChange } type="text" name="name"/>
         <button className="flat-button" onClick={ handleCreation } type="submit">{ textboxVal.selID ? "Change" : "Create" } Item</button>
       </form>
     </div>
   )
 }
 
-export default connect( state => {
+export default connect( ( state, ownProps ) => {
   return {
     todoList: state.todo,
+    containerID: ownProps.containerID,
     selected: () => { return state.todo.filter( i => i.selected === true )[ 0 ] }
   }
 }, dispatch => {

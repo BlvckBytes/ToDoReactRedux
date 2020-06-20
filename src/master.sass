@@ -4,9 +4,30 @@
   box-sizing: border-box
   font-family: sans-serif
 
+body, html
+  height: 100%
+  width: 100%
+  font-size: 16px
+
+body
+  display: flex
+  justify-content: center
+  align-items: center
+
+#root
+  background: #333
+  color: white
+  display: flex
+  flex-direction: column
+  align-items: center
+  width: 30rem
+  margin: 0 auto
+  border-radius: 0.5rem
+  padding: 2.5rem 0.5rem
+
 .flat-button
-  padding: 0.3rem 2rem
-  background: darken( green, 2% )
+  padding: 0.7rem
+  background: darken( cornflowerblue, 2% )
   color: white
   border-radius: 0.3rem
   border: none
@@ -14,9 +35,10 @@
   margin-top: 1rem
   cursor: pointer
   transition: filter 100ms ease-in-out
+  font-size: 0.95rem
 
 .flat-button_red
-  background: darken( red, 2% )
+  background: #E05263
 
   &:hover
     filter: brightness( 140% )

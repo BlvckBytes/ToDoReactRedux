@@ -6,8 +6,8 @@ import './master.sass';
 function App() {
   return (
     <>
-      <TodoCreate />
-      <TodoList title="Existing items" />
+      <TodoCreate containerID="todo-list_items" />
+      <TodoList containerID="todo-list_items" title="Existing items" />
     </>
   );
 }
